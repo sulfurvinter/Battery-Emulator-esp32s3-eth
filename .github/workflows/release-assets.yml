@@ -30,7 +30,7 @@ jobs:
       with:
         ref: refs/tags/${{ steps.vars.outputs.tag }}
 
-    - uses: actions/cache@v4
+    - uses: actions/cache@v6
       with:
         path: |
           ~/.cache/pip
