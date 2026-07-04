@@ -1,0 +1,64 @@
+name: 🔋 Compile Common Images
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# This is the list of jobs that will be run concurrently.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board_name: "LilygoT-CAN485"
+            pio_env: "lilygo_330"
+            artifact_name: "battery-emulator-lilygo-t-can485"
+          - board_name: "Stark CMR"
+            pio_env: "stark_330"
+            artifact_name: "battery-emulator-stark"
+          - board_name: "LilygoT-2CAN"
+            pio_env: "lilygo_2CAN_330"
+            artifact_name: "battery-emulator-lilygo-t-2can"
+          - board_name: "ESP32 DevKit V1"
+            pio_env: "esp32devkit_330"
+            artifact_name: "battery-emulator-esp32devkit"
+          - board_name: "BECom"
+            pio_env: "BECom_330"
+            artifact_name: "battery-emulator-becom"
+          - board_name: "Waveshare ESP32S3RS485CAN"
+            pio_env: "waveshare_330"
+            artifact_name: "battery-emulator-waveshareRS485CAN"
+          - board_name: "Compiler warning check"
+            pio_env: "compiler_warning_check"
+            artifact_name: "battery-dummy-check"
+
+    steps:
+    - uses: actions/checkout@v7
+      name: Checkout code
+
+    - uses: actions/cache@v5
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.platformio/.cache
+        key: ${{ runner.os }}-pio
+
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+
+    - name: Install PlatformIO Core
+      run: pip install --upgrade platformio
+
+    - name: Build image for ${{ matrix.board_name }}
+      run: pio run -e ${{ matrix.pio_env }}
+
+    - name: Upload artifact for ${{ matrix.board_name }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ matrix.artifact_name }}.bin
+        path: .pio/build/${{ matrix.pio_env }}/firmware.bin
