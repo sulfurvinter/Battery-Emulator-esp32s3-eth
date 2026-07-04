@@ -75,10 +75,8 @@ Or upload `firmware.bin` via browser at `http://192.168.4.1/update`.
 
 ---
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/dalathegreat/BYD-Battery-Emulator-For-Gen24?color=%23008000)
-![GitHub Repo stars](https://img.shields.io/github/stars/dalathegreat/Battery-Emulator?style=flat&color=%23128512)
-![GitHub forks](https://img.shields.io/github/forks/dalathegreat/Battery-Emulator?style=flat&color=%23128512)
-![GitHub actions](https://img.shields.io/github/actions/workflow/status/dalathegreat/BYD-Battery-Emulator-For-Gen24/compile-common-image-lilygo-TCAN.yml?color=0E810E)
+![GitHub release](https://img.shields.io/github/v/release/sulfurvinter/Battery-Emulator-esp32s3-eth?color=%23008000)
+![GitHub Repo stars](https://img.shields.io/github/stars/sulfurvinter/Battery-Emulator-esp32s3-eth?style=flat&color=%23128512)
 ![Static Badge](https://img.shields.io/badge/made-with_love-blue?color=%23008000)
 
 ## What is Battery Emulator?
@@ -111,16 +109,14 @@ For examples showing wiring, see each battery type's own Wiki page. For instance
 
 ## How to install the software 💻
 
-Start by watching this [quickstart guide](https://www.youtube.com/watch?v=sR3t7j0R9Z0)
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/sR3t7j0R9Z0/0.jpg)](https://www.youtube.com/watch?v=sR3t7j0R9Z0)
-
-1. Open the [webinstaller page](https://dalathegreat.github.io/BE-Web-Installer/)
-2. Follow the instructions on that page to install the software
-3. After successful installation, connect to the wireless network (Battery-Emulator , password: 123456789)
-4. Go to setup page and configure component selection
-5. (OPTIONAL, connect the board to your home Wifi)
+1. Download `BE_vX.X.X_ESP32S3Generic.factory.bin` from the [latest release](https://github.com/sulfurvinter/Battery-Emulator-esp32s3-eth/releases/latest)
+2. Flash it to your ESP32-S3 with esptool: `esptool --chip esp32s3 --port /dev/ttyUSB0 --baud 921600 write_flash 0x0 BE_vX.X.X_ESP32S3Generic.factory.bin`
+3. After flashing, connect to WiFi AP `BatteryEmulator` (password: `123456789`)
+4. Open `http://192.168.4.1` and go to **Settings → GPIO Pin Configuration** to assign your pins
+5. Select your battery and inverter type
 6. Connect your battery and inverter to the board and you are done! 🔋⚡
+
+For OTA updates, download `BE_vX.X.X_ESP32S3Generic.ota.bin` and upload it via the web UI at `http://<device-ip>/update`.
 
 ## Dependencies 📖
 This code uses the following excellent libraries: 
@@ -148,12 +144,12 @@ It is also based on the information found in the following excellent repositorie
 - Renault Zoe CAN Matrix https://docs.google.com/spreadsheets/u/0/d/1Qnk-yzzcPiMArO-QDzO4a8ptAS2Sa4HhVu441zBzlpM/edit?pli=1#gid=0
 - Pylon hacking https://www.eevblog.com/forum/programming/pylontech-sc0500-protocol-hacking/
 
-## Like this project? 💖
-Leave a ⭐ If you think this project is useful. Consider hopping onto my Patreon to encourage more open-source projects! As a bonus, you will get access to the Discord server, where we hangout, develop, support, share, discuss etc. all things related to DIY EV storage solutions. See you on the server? ;)
+## Like the upstream project? 💖
+This fork is based on dalathegreat's Battery-Emulator. If you find it useful, consider supporting the original author on Patreon:
 
 <a href="https://www.patreon.com/dala">
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a> <------ Click here to learn more!
+</a>
 
 
 ![image](https://github.com/user-attachments/assets/66b8e967-7f5e-409d-91ec-d012489a86d2)
