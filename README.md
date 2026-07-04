@@ -109,14 +109,59 @@ For examples showing wiring, see each battery type's own Wiki page. For instance
 
 ## How to install the software 💻
 
-1. Download `BE_vX.X.X_ESP32S3Generic.factory.bin` from the [latest release](https://github.com/sulfurvinter/Battery-Emulator-esp32s3-eth/releases/latest)
-2. Flash it to your ESP32-S3 with esptool: `esptool --chip esp32s3 --port /dev/ttyUSB0 --baud 921600 write_flash 0x0 BE_vX.X.X_ESP32S3Generic.factory.bin`
-3. After flashing, connect to WiFi AP `BatteryEmulator` (password: `123456789`)
-4. Open `http://192.168.4.1` and go to **Settings → GPIO Pin Configuration** to assign your pins
-5. Select your battery and inverter type
-6. Connect your battery and inverter to the board and you are done! 🔋⚡
+### Which binary do I need?
 
-For OTA updates, download `BE_vX.X.X_ESP32S3Generic.ota.bin` and upload it via the web UI at `http://<device-ip>/update`.
+| File | When to use |
+|------|-------------|
+| `BE_vX.X.X_ESP32S3Generic.factory.bin` | **First-time flash** — full image including bootloader and partition table. Use this on a blank or previously flashed board. |
+| `BE_vX.X.X_ESP32S3Generic.ota.bin` | **Update only** — smaller app image, uploaded over-the-air. Requires firmware already running on the board. |
+
+Download both from the [latest release](https://github.com/sulfurvinter/Battery-Emulator-esp32s3-eth/releases/latest).
+
+---
+
+### Option A — Flash via browser (easiest) 🌐
+
+Use [ESPConnect](https://thelastoutpostworkshop.github.io/ESPConnect/) — a browser-based flashing tool that works without installing any software (requires Chrome or Edge with Web Serial support).
+
+1. Connect the ESP32-S3 to your PC via USB
+2. Open [ESPConnect](https://thelastoutpostworkshop.github.io/ESPConnect/) in Chrome or Edge
+3. Click **Connect**, select your COM port
+4. Upload `BE_vX.X.X_ESP32S3Generic.factory.bin` at offset `0x0`
+5. Click **Flash** and wait for it to complete
+
+---
+
+### Option B — Flash via esptool (command line) 🖥️
+
+Requires Python and [esptool](https://github.com/espressif/esptool) (`pip install esptool`).
+
+```bash
+esptool --chip esp32s3 --port /dev/ttyUSB0 --baud 921600 write_flash 0x0 BE_vX.X.X_ESP32S3Generic.factory.bin
+```
+
+On Windows replace `/dev/ttyUSB0` with the correct COM port (e.g. `COM3`).
+
+---
+
+### Option C — OTA update (over the air) 📡
+
+Once the firmware is running, you can update without a USB cable:
+
+1. Open the device web UI at `http://<device-ip>` (or `http://192.168.4.1` if using the WiFi AP)
+2. Click **Perform OTA update**
+3. Upload `BE_vX.X.X_ESP32S3Generic.ota.bin`
+
+> **Note:** Always use the `.factory.bin` for the first flash. Using the OTA binary for a first-time flash will result in a non-booting board.
+
+---
+
+### After flashing
+
+1. Connect to WiFi AP `BatteryEmulator` (password: `123456789`)
+2. Open `http://192.168.4.1` → **Settings → GPIO Pin Configuration** and assign your pins
+3. Select your battery and inverter type
+4. Connect your battery and inverter and you are done! 🔋⚡
 
 ## Dependencies 📖
 This code uses the following excellent libraries: 
