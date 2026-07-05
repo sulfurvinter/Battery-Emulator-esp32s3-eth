@@ -38,13 +38,22 @@ After flashing, connect to WiFi AP `BatteryEmulator` (password `123456789`) and 
 | CAN Native (TWAI) | TX, RX |
 | RS485 | TX, RX, DE |
 | MCP2515 CAN add-on (SPI) | SCK, MOSI, MISO, CS, INT |
-| MCP2517FD / MCP2518FD CAN-FD add-on (SPI) | SCK, SDI, SDO, CS, INT |
+| MCP2517FD / MCP2518FD CAN-FD add-on #1 (SPI) | SCK, SDI, SDO, CS, INT |
+| MCP2517FD / MCP2518FD CAN-FD add-on #2 (SPI) | SCK, SDI, SDO, CS, INT |
+| W5500 Ethernet (SPI) | SCK, MOSI, MISO, CS, INT, RST, SPI bus |
 | Positive contactor | GPIO pin |
 | Negative contactor | GPIO pin |
 | Precharge relay | GPIO pin |
 | BMS power control | GPIO pin |
 | NeoPixel status LED | GPIO pin |
 | SSD1306 OLED display (I2C, 128x64) | SDA, SCL |
+
+### W5500 Ethernet support
+
+This fork adds optional Ethernet connectivity via a W5500 SPI module. Enable it in **Settings → W5500 Ethernet** and configure the SPI pins. WiFi AP stays active as a fallback regardless.
+
+- W5500 must use a **different SPI bus** from the CAN chips to avoid bus contention (CAN chips use ISR-level SPI). Recommended: W5500 on SPI3/HSPI, CAN chips on SPI2/FSPI.
+- Hold the **BOOT button for 5 seconds** at power-on to reset all network settings back to the default WiFi AP mode (useful if you lose access after a misconfiguration).
 
 The OLED display is auto-detected at boot — if the configured pins are unset or the display is absent, it fails silently.
 
