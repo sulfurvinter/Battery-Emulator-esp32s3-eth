@@ -195,6 +195,3 @@ This fork is based on dalathegreat's Battery-Emulator. If you find it useful, co
 <a href="https://www.patreon.com/dala">
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
-
-
-![image](https://github.com/user-attachments/assets/66b8e967-7f5e-409d-91ec-d012489a86d2)
